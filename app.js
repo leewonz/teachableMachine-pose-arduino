@@ -27,15 +27,10 @@ io.sockets.on('connection', function (socket) { // connection이 발생할 때 �
   console.log('server running at port port');
   
     setInterval(() => {
-      socket.emit('news', { hello: 'world' });
+      socket.emit('news', { connection: 'fine' });
     }, 100);
-   
   
-  socket.on('my other event', function (data) { // 클라이언트에서 my other event가 발생하면 데이터를 받습니다.
-  
-        console.log(data);
-  
-      });
+    console.log("connected");
 
   socket.on('sendPose', function (data) { // 클라이언트에서 my other event가 발생하면 데이터를 받습니다.
   
