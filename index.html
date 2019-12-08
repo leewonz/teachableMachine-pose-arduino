@@ -23,15 +23,17 @@
 
         // the link to your model provided by Teachable Machine export panel
 
-            var socket = io.connect('http://localhost:3000');  //localhost로 연결합니다.
+        const URL = "./my_model/";
+        let model, webcam, ctx, labelContainer, maxPredictions;
+        let estValue, estIndex;
+
+        var socket = io.connect('http://localhost:3000');  //localhost로 연결합니다.
 
             socket.on('news', function (data) {  // 서버에서 news 이벤트가 일어날 때 데이터를 받습니다.
                 console.log(data);
                 socket.emit('my other event', { my: 'data' });   //서버에 my other event 이벤트를 보냅니다.
+                socket.emit('sendPose', { pose: estIndex, value: estValue }); 
             });
-
-        const URL = "./my_model/";
-        let model, webcam, ctx, labelContainer, maxPredictions;
 
         async function init() {
             const modelURL = URL + "model.json";
@@ -73,11 +75,21 @@
             const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
             // Prediction 2: run input through teachable machine classification model
             const prediction = await model.predict(posenetOutput);
+            
+            estValue = 0;
+            estIndex = 0;
 
             for (let i = 0; i < maxPredictions; i++) {
                 const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
                 labelContainer.childNodes[i].innerHTML = classPrediction;
+
+                if (prediction[i].probability > estValue)
+                {
+                    estValue = prediction[i].probability;
+                    estIndex = prediction[i];
+                }
+
             }
 
             // finally draw the poses
