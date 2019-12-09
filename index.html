@@ -25,7 +25,8 @@
 
         const URL = "./my_model/";
         let model, webcam, ctx, labelContainer, maxPredictions;
-        let estValue, estIndex;
+        let estValue = 0.0
+        let estIndex = 0.0;
 
         var socket = io.connect('http://localhost:3000');  //localhost로 연결합니다.
 
