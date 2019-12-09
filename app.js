@@ -3,6 +3,9 @@ const port = 3000;
 const http = require('http');
 var fs = require('fs');
 var io = require('socket.io').listen(port);
+var SerialPort = require('serialport');
+
+const sp = new SerialPort("COM4", { baudRate:9600, autoOpen:true });
 
 const hostname = '127.0.0.1';
 
@@ -34,8 +37,8 @@ io.sockets.on('connection', function (socket) { // connection이 발생할 때 �
 
   socket.on('sendPose', function (data) { // 클라이언트에서 my other event가 발생하면 데이터를 받습니다.
   
-      console.log(data);
-
+      console.log("index:" + data["pose"] + "/value:" + data["value"] + "/");
+      sp.write("index:" + data["pose"] + "/value:" + data["value"] + "/");
     });
 
   

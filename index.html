@@ -31,7 +31,7 @@
 
             socket.on('news', function (data) {  // 서버에서 news 이벤트가 일어날 때 데이터를 받습니다.
                 console.log(data);
-                socket.emit('sendPose', { pose: estIndex, value: estValue }); 
+                socket.emit('sendPose', { pose: estIndex.toFixed(2), value: estValue.toFixed(2) }); 
             });
 
         async function init() {
