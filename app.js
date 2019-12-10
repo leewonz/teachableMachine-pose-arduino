@@ -9,6 +9,8 @@ const sp = new SerialPort("COM4", { baudRate:9600, autoOpen:true });
 
 const hostname = '127.0.0.1';
 
+var serialInputLog = "";
+
 
 fs.readFile('./index.html', function (err, html) {
 
@@ -31,15 +33,25 @@ io.sockets.on('connection', function (socket) { // connection이 발생할 때 �
   
     setInterval(() => {
       socket.emit('news', { connection: 'fine' });
+    }, 1000);
+
+    setInterval(() => {
+      console.log("log : " + serialInputLog);
+      serialInputLog = "";
     }, 100);
   
     console.log("connected");
 
   socket.on('sendPose', function (data) { // 클라이언트에서 my other event가 발생하면 데이터를 받습니다.
   
-      console.log("index:" + data["pose"] + "/value:" + data["value"] + "/");
-      sp.write("index:" + data["pose"] + "/value:" + data["value"] + "/");
+      //console.log("index:" + data["pose"] + "/amount:" + data["value"] + "/");
+      sp.write("index:" + data["pose"] + "/amount:" + data["value"] + "/");
     });
 
   
   });
+
+sp.on('data', function(data)
+{
+  serialInputLog += data;
+});
