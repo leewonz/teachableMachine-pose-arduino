@@ -5,7 +5,7 @@ var fs = require('fs');
 var io = require('socket.io').listen(port);
 var SerialPort = require('serialport');
 
-const sp = new SerialPort("COM4", { baudRate:9600, autoOpen:true });
+const sp = new SerialPort("COM6", { baudRate:9600, autoOpen:true });
 
 const hostname = '127.0.0.1';
 
@@ -33,12 +33,12 @@ io.sockets.on('connection', function (socket) { // connection이 발생할 때 �
   
     setInterval(() => {
       socket.emit('news', { connection: 'fine' });
-    }, 1000);
+    }, 100);
 
     setInterval(() => {
       console.log("log : " + serialInputLog);
       serialInputLog = "";
-    }, 100);
+    }, 1000);
   
     console.log("connected");
 
