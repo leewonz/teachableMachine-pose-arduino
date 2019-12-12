@@ -137,9 +137,9 @@ void loop() {
   {
     if (poseIndex == 0)
     {
-      servo_1.write(180); 
+      servo_1.write(0); 
       servo_3.write(90);
-      servo_5.write(180);
+      servo_5.write(0);
       
       servo_2.write(0);
       servo_4.write(90);
@@ -167,9 +167,9 @@ void loop() {
     }
     if (poseIndex == 3)
     {
-      servo_1.write(180); 
+      servo_1.write(0); 
       servo_3.write(90);
-      servo_5.write(0);
+      servo_5.write(180);
       
       servo_2.write(0);
       servo_4.write(90);
